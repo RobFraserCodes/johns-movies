@@ -73,8 +73,6 @@ export default function LatestTVShows() {
                 <option>Sort By</option>
                 <option value="Title, DESC">Title, DESC</option>
                 <option value="Title, ASC">Title, ASC</option>
-                <option value="Price, DESC">Price, DESC</option>
-                <option value="Price, ASC">Price, ASC</option>
                 </select>
             </div>
             </div>
@@ -102,7 +100,7 @@ export default function LatestTVShows() {
                     <div className="mt-32 sm:mt-48 lg:mt-64">
                     <div
                         className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
-                        <p className="text-sm text-white">
+                        <p className="text-sm text-white line-clamp-3">
                         {tvshow.overview}
                         </p>
                     </div>
