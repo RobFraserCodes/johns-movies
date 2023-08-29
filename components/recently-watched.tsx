@@ -6,7 +6,7 @@ export default function RecentlyWatched() {
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
             <header>
             <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-                Recently Watched
+                John's Movie Shelf
             </h2>
             </header>
 

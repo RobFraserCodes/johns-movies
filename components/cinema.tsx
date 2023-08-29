@@ -3,7 +3,6 @@
 import React, { useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
-import SearchDB from './search-database';
 
 export default function Cinema() {
     const [movies, setMovies] = React.useState([]);
