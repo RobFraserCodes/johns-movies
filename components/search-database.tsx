@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from './ui/button'
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
+import { MagnifyingGlassIcon} from '@heroicons/react/24/outline'
 
 export default function SearchDB() {
   return (
@@ -8,9 +8,10 @@ export default function SearchDB() {
         <Button
             variant={'ghost'}
             className='w-full'>
-            <MagnifyingGlassIcon/>
+            <MagnifyingGlassIcon className='w-6 h-6'/>
             <p className='text-gray-500 px-8'>Search Database</p>
         </Button>
     </div>
   )
 }
+
