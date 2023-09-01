@@ -3,15 +3,22 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
+interface TVShow {
+    backdrop_path: string;
+    vote_average: number;
+    name: string;
+    overview: string;
+  }
+  
+
 export default function LatestTVShows() {
-    const [tvshows, setTVShows] = useState([]);
+    const [tvshows, setTVShows] = useState<TVShow[]>([]);
 
     useEffect(() => {
         fetch("/api/tvshows")
         .then((response) => response.json())
         .then((data) => {
             setTVShows(data.results);
-            console.log(data.results);
         });
     }, []);
 
