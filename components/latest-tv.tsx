@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 export default function LatestTVShows() {
-    const [tvshows, setTVShows] = React.useState([]);
+    const [tvshows, setTVShows] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         fetch("/api/tvshows")
         .then((response) => response.json())
         .then((data) => {

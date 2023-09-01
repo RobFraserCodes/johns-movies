@@ -1,7 +1,8 @@
 import { NextRequest } from "next/server";
 
-export async function GET(req: NextRequest) {
-    let movieId = req.nextUrl.searchParams.get('id');
+export async function GET(req: NextRequest, params: { id: string }) {
+    const movieId = params.id;
+    console.log(params);
     const token = process.env.NEXT_PUBLIC_TMDB_TOKEN;
     const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
     const auth = `Bearer ${token}`;

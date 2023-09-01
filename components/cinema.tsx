@@ -1,18 +1,21 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
+import { nowPlaying } from '@/type';
 
-export default function Cinema() {
-    const [movies, setMovies] = React.useState([]);
+export default function Cinema(props: { nowPlaying: typeof nowPlaying }) {
+    const [movies, setMovies] = useState<nowPlaying[]>([]);
 
     useEffect(() => {
         fetch("/api/movies")
         .then((response) => response.json())
         .then((data) => {
             setMovies(data.results);
-            console.log(data.results);
+        })
+        .catch((error) => {
+            console.error("Error fetching movies:", error);
         });
     }, []);
     
