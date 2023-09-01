@@ -34,16 +34,24 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
   }
 
   return (
-    <section className='container flex-col py-16'>
-      <Image 
-        src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w300${movieDetails.poster_path}` : 'path_to_default_image.jpg'} alt={movieDetails.title} 
-        className='rounded-md'
-        alt={movieDetails.title}
-        width={300}
-        height={450}
-      /> 
-      <h1>{movieDetails.title}</h1>
-      <p>{movieDetails.overview}</p>
+    <section className='container py-16'>
+      <div className='flex'>
+        <div>
+          <h1>{movieDetails.title}</h1>
+          <p>{movieDetails.overview}</p>
+        </div>
+        <div>
+          <Image 
+            src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w300${movieDetails.poster_path}` : 'path_to_default_image.jpg'} 
+            alt={movieDetails.title} 
+            className='rounded-md'
+            width={300}
+            height={450}
+          /> 
+        </div>
+
+      </div>
+
       {/* Add other movie details as desired */}
     </section>
   );
