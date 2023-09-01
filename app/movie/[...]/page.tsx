@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default function MovieDetailPage({ params }: { params: { id: string } }) {
   const [movieDetails, setMovieDetails] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch(`/api/movies/details?id=${params.id}`)
     .then((response) => response.json())
     .then((data) => {
