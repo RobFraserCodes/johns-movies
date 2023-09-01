@@ -6,9 +6,16 @@ import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 
+interface Movie {
+  id: number;
+  title: string;
+  release_date: string;
+  poster_path: string;
+}
+
 export default function SearchDB() {
   const [inputValue, setInputValue] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const auth = `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`;
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
