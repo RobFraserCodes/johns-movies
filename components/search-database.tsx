@@ -11,7 +11,7 @@ export default function SearchDB() {
   const [searchResults, setSearchResults] = useState([]);
   const auth = `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`;
 
-  const handleSearch = async (e) => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(inputValue)}&include_adult=false&language=en-US&page=1`;
