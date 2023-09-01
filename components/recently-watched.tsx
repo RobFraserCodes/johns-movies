@@ -52,7 +52,7 @@ export default function RecentlyWatched() {
             </div>
 
             <div>
-                <label for="SortBy" className="sr-only">SortBy</label>
+                <label htmlFor="SortBy" className="sr-only">SortBy</label>
 
                 <select id="SortBy" className="h-10 rounded border-gray-300 text-sm">
                 <option>Sort By</option>
