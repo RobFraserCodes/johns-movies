@@ -1,17 +1,78 @@
-import React from 'react'
-import { Button } from './ui/button'
-import { MagnifyingGlassIcon} from '@heroicons/react/24/outline'
+'use client'
+
+import React, { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Input } from '@/components/ui/input';
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 
 export default function SearchDB() {
-  return (
-    <div className='justify-center w-full py-4 container'>
-        <Button
-            variant={'ghost'}
-            className='w-full'>
-            <MagnifyingGlassIcon className='w-6 h-6'/>
-            <p className='text-gray-500 px-8'>Search Database</p>
-        </Button>
-    </div>
-  )
-}
+  const [inputValue, setInputValue] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(inputValue)}&include_adult=false&language=en-US&page=1`;
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOGZmYWQ1OWIzMGIzYWY2MjM4MzA5MjQxYTgzOTBmMyIsInN1YiI6IjYyMjYyOWEzYzk5NWVlMDA2ZWI2NmM4MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4Jro3zV0k-6NDt-Mhbgi94oj-qO1RK-Ozleo1NK21ZU'  // Replace with your Bearer token
+      }
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      setSearchResults(data.results.slice(0, 5));  // Get the top 5 results
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  return (
+    <div className='justify-center w-full py-4 container flex flex-col align-middle'>
+      <form onSubmit={handleSearch} className="flex align-middle">
+        <MagnifyingGlassIcon className='w-6 h-6 m-1' />
+        <Input 
+          type='search' 
+          placeholder='Search the database'
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button type="submit" className="hidden">Search</button>
+      </form>
+      {searchResults.length > 0 && (
+        <div className="mt-2 bg-white border rounded">
+          {searchResults.map((movie, index) => (
+            <Link 
+              href={`/movie/${movie.id}`}
+              key={index}
+              className="flex items-center p-2 hover:bg-gray-200 cursor-pointer"
+              onClick={() => setInputValue(movie.title)}
+            >
+              {movie.poster_path ? (
+                <Image 
+                  src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} 
+                  alt={movie.title}
+                  className="mr-2 w-16"
+                  width={92}
+                  height={138}
+                />
+              ) : (
+                <div className="mr-2 w-16 h-24 bg-gray-200 flex items-center justify-center">
+                  No Image
+                </div>
+              )}
+              <div>
+                {movie.title} 
+                {movie.release_date ? ` (${new Date(movie.release_date).getFullYear()})` : ''}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
