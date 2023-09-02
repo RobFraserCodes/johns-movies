@@ -3,15 +3,22 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
+interface TVShow {
+    backdrop_path: string;
+    vote_average: number;
+    name: string;
+    overview: string;
+  }
+  
+
 export default function LatestTVShows() {
-    const [tvshows, setTVShows] = useState([]);
+    const [tvshows, setTVShows] = useState<TVShow[]>([]);
 
     useEffect(() => {
         fetch("/api/tvshows")
         .then((response) => response.json())
         .then((data) => {
             setTVShows(data.results);
-            console.log(data.results);
         });
     }, []);
 
@@ -67,7 +74,7 @@ export default function LatestTVShows() {
             </div>
 
             <div>
-                <label for="SortBy" className="sr-only">SortBy</label>
+                <label htmlFor="SortBy" className="sr-only">SortBy</label>
 
                 <select id="SortBy" className="h-10 rounded border-gray-300 text-sm">
                 <option>Sort By</option>

@@ -6,7 +6,7 @@ export default function RecentlyWatched() {
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
             <header>
             <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-                John's Movie Shelf
+                John&apos;s Movie Shelf
             </h2>
             </header>
 
@@ -52,7 +52,7 @@ export default function RecentlyWatched() {
             </div>
 
             <div>
-                <label for="SortBy" className="sr-only">SortBy</label>
+                <label htmlFor="SortBy" className="sr-only">SortBy</label>
 
                 <select id="SortBy" className="h-10 rounded border-gray-300 text-sm">
                 <option>Sort By</option>

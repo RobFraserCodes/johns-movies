@@ -1,31 +1,37 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { movie } from '@/type';
+
+interface movie {
+  title: string;
+  overview: string;
+  poster_path: string;
+}
 
 export default function MovieDetailPage({ params }: { params: { id: string } }) {
-  const [movieDetails, setMovieDetails] = useState<movie>(null);
-  const url = `https://api.themoviedb.org/3/movie/${params.id}?language=en-US`;
-  const token = process.env.NEXT_PUBLIC_TMDB_TOKEN;
-  const auth = `Bearer ${token}`;
-    
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: auth
-    }
-  };
+  const [movieDetails, setMovieDetails] = useState<movie | null>(null);
 
   useEffect(() => {
+    const url = `https://api.themoviedb.org/3/movie/${params.id}?language=en-US`;
+    const token = process.env.NEXT_PUBLIC_TMDB_TOKEN;
+    const auth = `Bearer ${token}`;
+
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: auth,
+      },
+    };
+
     if (params.id) {
       fetch(url, options)
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           setMovieDetails(json);
         })
-        .catch(err => console.error('error:' + err));
+        .catch((err) => console.error('error:' + err));
     }
   }, [params.id]);
 
@@ -34,17 +40,22 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
   }
 
   return (
-    <section className='container flex-col py-16'>
-      <Image 
-        src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w300${movieDetails.poster_path}` : 'path_to_default_image.jpg'} alt={movieDetails.title} 
-        className='rounded-md'
-        alt={movieDetails.title}
-        width={300}
-        height={450}
-      /> 
-      <h1>{movieDetails.title}</h1>
-      <p>{movieDetails.overview}</p>
-      {/* Add other movie details as desired */}
+    <section className='container py-16'>
+      <div className='flex'>
+        <div>
+          <h1>{movieDetails.title}</h1>
+          <p>{movieDetails.overview}</p>
+        </div>
+        <div>
+          <Image 
+            src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w300${movieDetails.poster_path}` : 'path_to_default_image.jpg'} 
+            alt={movieDetails.title} 
+            className='rounded-md'
+            width={300}
+            height={450}
+          /> 
+        </div>
+      </div>
     </section>
   );
 }

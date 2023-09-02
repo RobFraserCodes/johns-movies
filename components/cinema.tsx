@@ -3,9 +3,13 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
-import { nowPlaying } from '@/type';
 
-export default function Cinema(props: { nowPlaying: typeof nowPlaying }) {
+interface nowPlaying {
+    original_title: string;
+    backdrop_path: string;
+}
+
+export default function Cinema() {
     const [movies, setMovies] = useState<nowPlaying[]>([]);
 
     useEffect(() => {

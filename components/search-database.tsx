@@ -6,11 +6,19 @@ import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 
+interface Movie {
+  id: number;
+  title: string;
+  release_date: string;
+  poster_path: string;
+}
+
 export default function SearchDB() {
   const [inputValue, setInputValue] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<Movie[]>([]);
+  const auth = `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`;
 
-  const handleSearch = async (e) => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(inputValue)}&include_adult=false&language=en-US&page=1`;
@@ -18,7 +26,7 @@ export default function SearchDB() {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOGZmYWQ1OWIzMGIzYWY2MjM4MzA5MjQxYTgzOTBmMyIsInN1YiI6IjYyMjYyOWEzYzk5NWVlMDA2ZWI2NmM4MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4Jro3zV0k-6NDt-Mhbgi94oj-qO1RK-Ozleo1NK21ZU'  // Replace with your Bearer token
+        Authorization: auth,
       }
     };
 
@@ -34,14 +42,13 @@ export default function SearchDB() {
   return (
     <div className='justify-center w-full py-4 container flex flex-col align-middle'>
       <form onSubmit={handleSearch} className="flex align-middle">
-        <MagnifyingGlassIcon className='w-6 h-6 m-1' />
         <Input 
           type='search' 
           placeholder='Search the database'
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <button type="submit" className="hidden">Search</button>
+        <MagnifyingGlassIcon className='w-6 h-6 m-1' />        <button type="submit" className="hidden">Search</button>
       </form>
       {searchResults.length > 0 && (
         <div className="mt-2 bg-white border rounded">
