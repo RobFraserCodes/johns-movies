@@ -35,11 +35,12 @@ export default function Menu() {
 
             <div className="flex items-center gap-4">
             <div className="sm:flex sm:gap-4">
+                <Link href="/login">
                 <Button variant={'default'}>Login</Button>
-
-            <div className="hidden sm:flex">
+                </Link>
+                <Link href="/register">
                 <Button variant={'ghost'}>Sign Up</Button>
-            </div>
+                </Link>
             </div>
 
             <div className="block md:hidden">
