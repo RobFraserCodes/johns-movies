@@ -40,7 +40,7 @@ export default function SearchDB() {
   };
 
   return (
-    <div className='justify-center w-full py-4 container flex flex-col align-middle'>
+    <div className='justify-center w-full pt-8 container flex flex-col align-middle'>
       <form onSubmit={handleSearch} className="flex align-middle">
         <Input 
           type='search' 
