@@ -41,8 +41,8 @@ export default function Footer() {
             </div>
 
             {/* Bottom section */}
-        <div className="mt-16 border-t border-gray-200 py-10">
-            <p className="mt-12 text-center text-sm text-gray-500 lg:text-right">
+        <div className="mt-8 border-t border-gray-200">
+            <p className="mt-8 text-center text-sm text-gray-500 lg:text-right">
             Copyright &copy; 2023. All rights reserved.
             </p>
         </div>
