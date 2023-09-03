@@ -33,9 +33,15 @@ function getRandomItemFromArray<T>(array: T[]): T {
   return array[randomIndex];
 }
 
+interface Movie {
+  id: number;
+  original_title: string;
+  backdrop_path: string;
+}
+
 export default function UserRegisterPage() {
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const hasSelectedMovie = useRef(false);
   const {
     register,

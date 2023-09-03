@@ -20,7 +20,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-interface movie {
+interface Movie {
   id: number;
   original_title: string;
   backdrop_path: string;
@@ -39,7 +39,7 @@ function getRandomItemFromArray<T>(array: T[]): T {
 
 export default function UserLoginPage() {
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const hasSelectedMovie = useRef(false);
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -152,9 +152,9 @@ export default function UserLoginPage() {
               </p>
             </div>
 
-            <div className='pt-8 space-y-4'>
+            <div className=''>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormProvider {...form}>
                 <FormField
                   control={form.control}
