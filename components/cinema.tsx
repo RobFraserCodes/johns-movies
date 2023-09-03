@@ -33,7 +33,7 @@ export default function Cinema() {
             <li key={index} className={index === 2 ? "lg:col-span-2 lg:col-start-2 lg:row-span-2 lg:row-start-1" : ""}>
                 <Link href="#" className="relative block group">
                 <Image
-                    src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
+                    src={`https://image.tmdb.org/t/p/w780/${movie.backdrop_path}`}
                     alt={movie.original_title}
                     className="object-cover w-full transition duration-500 aspect-square group-hover:opacity-90"
                     width={500}

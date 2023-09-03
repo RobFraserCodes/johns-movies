@@ -19,9 +19,9 @@ export default function Footer() {
             </div>
 
             {/* Logo and site description */}
-            <div className="lg:flex lg:items-end lg:justify-between">
+            <div className="lg:flex justify-center">
             <div>
-                <div className="flex justify-center lg:justify-start">
+                <div className="flex justify-center">
                     <PlayCircleIcon className='w-8 h-8 mt-1' /><h1>{siteDetails.title}</h1>
                 </div>
                 <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 lg:text-left">
@@ -40,7 +40,7 @@ export default function Footer() {
                 ))}                    
             </div>
 
-            {/* Bottom section */}
+        {/* Bottom section */}
         <div className="mt-8 border-t border-gray-200">
             <p className="mt-8 text-center text-sm text-gray-500 lg:text-right">
             Copyright &copy; 2023. All rights reserved.
