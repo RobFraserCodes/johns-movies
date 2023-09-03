@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { siteDetails } from '@/lib/meta';
 import { PlayCircleIcon } from '@heroicons/react/24/solid';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, FormProvider } from 'react-hook-form';
 import * as z from 'zod';
 import {
   Form,
@@ -16,13 +17,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 const registrationSchema = z.object({
-  first_name: z.string().min(1, 'First Name is required'),
-  last_name: z.string().min(1, 'Last Name is required'),
+  username: z.string().min(1, 'A username is required'),
   email: z.string().email('Invalid email address'),
   password: z.string().min(8, 'Password should be at least 8 characters'),
   marketing_accept: z.boolean(),
@@ -43,17 +42,15 @@ export default function UserRegisterPage() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const hasSelectedMovie = useRef(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+      marketing_accept: false,
+    },
   });
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
 
   useEffect(() => {
     const token = process.env.NEXT_PUBLIC_TMDB_TOKEN;
@@ -91,7 +88,10 @@ export default function UserRegisterPage() {
       hasSelectedMovie.current = true;
     }
   }, [movies]);
-    
+
+  function onSubmit(values: z.infer<typeof registrationSchema>) {
+    console.log(values);
+  }
     
   return (
     <section className="bg-white">
@@ -157,27 +157,52 @@ export default function UserRegisterPage() {
             </p>
             </div>
 
-            {/* <Form>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                    <FormField
-                        control={register}
-                        name="first_name"
-                        render={({ field, fieldState }) => (
-                            <FormItem>
-                                <FormLabel>First Name</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="John" {...field} />
-                                </FormControl>
-                                {errors.first_name && (
-                                    <FormMessage>{errors.first_name.message}</FormMessage>
-                                )}
-                            </FormItem>
-                        )}
-                    />
-
-                    <Button type="submit">Create an account</Button>
+            <div className=''>
+              <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormProvider {...form}>
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field, formState }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="username">Username</FormLabel>
+                      <Input
+                        type="text"
+                        id="username"
+                        placeholder="Username"
+                        {...field}
+                      />
+                      {formState.errors.username && (
+                        <FormMessage />
+                      )}
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field, formState }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="password">Password</FormLabel>
+                      <Input
+                        type="text"
+                        id="password"
+                        placeholder="Password"
+                        {...field}
+                      />
+                      {formState.errors.username && (
+                        <FormMessage />
+                      )}
+                    </FormItem>
+                  )}
+                />
+                <Button className="mt-4"
+                  type="submit">Login</Button>
+              </FormProvider>
                 </form>
-            </Form> */}
+              </Form>
+            </div>
 
         </div>
         </main>
