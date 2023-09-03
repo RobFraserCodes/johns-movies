@@ -7,6 +7,7 @@ interface movie {
   title: string;
   overview: string;
   poster_path: string;
+  backdrop_path: string;
 }
 
 export default function MovieDetailPage({ params }: { params: { id: string } }) {
@@ -39,18 +40,20 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
     return <div>Loading...</div>;
   }
 
+  const backdropUrl = movieDetails.backdrop_path ? `https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}` : 'path_to_default_image.jpg';
+
   return (
-    <section className='container py-16'>
-      <div className='flex'>
-        <div>
+    <section className="container py-16 h-screen" style={{ backgroundImage: `url(${backdropUrl})`, backgroundSize: 'cover' }}>
+      <div className='flex flex-col lg:flex-row text-white justify-center'>
+        <div className="m-8 w-1/2">
           <h1>{movieDetails.title}</h1>
           <p>{movieDetails.overview}</p>
         </div>
-        <div>
+        <div className='w-1/2'>
           <Image 
             src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w300${movieDetails.poster_path}` : 'path_to_default_image.jpg'} 
             alt={movieDetails.title} 
-            className='rounded-md'
+            className='rounded-md m-8'
             width={300}
             height={450}
           /> 

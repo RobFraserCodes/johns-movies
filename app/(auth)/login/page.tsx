@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, use } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { siteDetails } from '@/lib/meta';
@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -24,6 +24,7 @@ const loginSchema = z.object({
   username: z.string().email('Invalid username'),
   password: z.string().min(8, 'Password should be at least 8 characters'),
 });
+
 
 function getRandomItemFromArray(array) {
   const randomIndex = Math.floor(Math.random() * array.length);
@@ -34,12 +35,13 @@ export default function UserLoginPage() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const hasSelectedMovie = useRef(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+
+  const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: '',
+      password: '',
+    },
   });
 
   useEffect(() => {
@@ -78,7 +80,10 @@ export default function UserLoginPage() {
       hasSelectedMovie.current = true;
     }
   }, [movies]);
-    
+  
+  function onSubmit(values: z.infer<typeof loginSchema>) {
+    console.log(values);
+  }
     
   return (
     <section className="bg-white">
@@ -112,58 +117,90 @@ export default function UserLoginPage() {
             </Link>
 
             <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-            Welcome to JMDB 🎥
+            Login to JMDB 🎥
             </h2>
 
             <p className="mt-4 leading-relaxed text-white/90">
-            Registering for an account allows you to save your favourite movies and TV shows.
+            Use your account to save your favourite movies and TV shows.
             </p>
 
             {selectedMovie && <p className='leading-relaxed text-white/90 text-sm font-thin'>Movie image: {selectedMovie.original_title}</p> }
         </div>
         </section>
 
-        {/* Mobile View */}
-        <main
-        className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
-        >
-        <div className="max-w-xl lg:max-w-3xl">
+        <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+          <div className="max-w-xl lg:max-w-3xl">
             <div className="relative -mt-16 block lg:hidden">
-            <Link href="/"
-                className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white sm:h-20 sm:w-20">
-                <span className="sr-only">Home</span>
-                <PlayCircleIcon className="h-16 w-16 text-gray-900" />
-            </Link>
+              <Link href="/"
+                  className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white sm:h-20 sm:w-20">
+                  <span className="sr-only">Home</span>
+                  <PlayCircleIcon className="h-16 w-16 text-gray-900" />
+              </Link>
 
-            <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-                Welcome to JMDB 🎥
-            </h1>
+              <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
+                  Welcome to JMDB 🎥
+              </h1>
 
-            <p className="mt-4 leading-relaxed text-gray-500">
-                Register to save your favourite movies and TV shows.
-            </p>
+              <p className="mt-4 leading-relaxed text-gray-500">
+                  Register to save your favourite movies and TV shows.
+              </p>
             </div>
 
-          <Form onSubmit={handleSubmit((data) => console.log(data))}>
-            <FormItem>
-              <FormLabel htmlFor="username">Username</FormLabel>
-              <FormField>
-                <Input
-
-                  {...register('username')}
-                  id="username"
-                  type="text"
-                  placeholder="Username"
+            <div className='pt-8 space-y-4'>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormProvider {...form}>
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field, formState }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="username">Username</FormLabel>
+                      <Input
+                        type="text"
+                        id="username"
+                        placeholder="Username"
+                        {...field}
+                      />
+                      {formState.errors.username && (
+                        <FormMessage />
+                      )}
+                    </FormItem>
+                  )}
                 />
-              </FormField>
-              {errors.username && (
-                <FormMessage>{errors.username.message}</FormMessage>
-              )}
-            </FormItem>
-            </Form>
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field, formState }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="password">Password</FormLabel>
+                      <Input
+                        type="text"
+                        id="password"
+                        placeholder="Password"
+                        {...field}
+                      />
+                      {formState.errors.username && (
+                        <FormMessage />
+                      )}
+                    </FormItem>
+                  )}
+                />
+                <Button className="mt-4"
+                  type="submit">Login</Button>
+              </FormProvider>
+                </form>
+              </Form>
+            </div>
 
-        </div>
+            <div className='space-y-0 text-sm pt-8 text-stone-400'>
+              <p>Forgotten password?</p>
+              <p>Don&apos;t have an account? <Link href="/register"
+                className='text-stone-600'>Register</Link></p>
+            </div>
+          </div>
         </main>
+
     </div>
     </section>
   )
