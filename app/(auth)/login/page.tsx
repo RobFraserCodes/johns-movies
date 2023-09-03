@@ -20,13 +20,19 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
+interface movie {
+  id: number;
+  original_title: string;
+  backdrop_path: string;
+}
+
 const loginSchema = z.object({
   username: z.string().email('Invalid username'),
   password: z.string().min(8, 'Password should be at least 8 characters'),
 });
 
 
-function getRandomItemFromArray(array) {
+function getRandomItemFromArray<T>(array: T[]): T {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
 }

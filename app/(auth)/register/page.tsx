@@ -28,7 +28,7 @@ const registrationSchema = z.object({
   marketing_accept: z.boolean(),
 });
 
-function getRandomItemFromArray(array) {
+function getRandomItemFromArray<T>(array: T[]): T {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
 }
