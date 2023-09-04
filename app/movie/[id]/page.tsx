@@ -1,5 +1,6 @@
-'use client';
+'use client'
 
+// Path: app/movie/%5Bid%5D/page.tsx
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
