@@ -1,21 +1,28 @@
 'use client'
 
-// Path: app/movie/%5Bid%5D/page.tsx
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowUturnLeftIcon, StarIcon, FilmIcon, BanknotesIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
-interface movie {
+interface movieDetails {
   title: string;
   overview: string;
   poster_path: string;
   backdrop_path: string;
+  tagline: string;
+  revenue: number;
+  runtime: number;
+  vote_average: number;
+  genres: Array<{ id: number; name: string }>;
+  popularity: number;
+  release_date: string;
 }
 
 export default function MovieDetailPage({ params }: { params: { id: string } }) {
-  const [movieDetails, setMovieDetails] = useState<movie | null>(null);
+  const [movieDetails, setMovieDetails] = useState<movieDetails | null>(null);
 
   useEffect(() => {
     const url = `https://api.themoviedb.org/3/movie/${params.id}?language=en-US`;
@@ -44,7 +51,17 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
     return <div>Loading...</div>;
   }
 
+  function formatRevenue(number:number) {
+    if (number < 1e3) return number;
+    if (number >= 1e3 && number < 1e6) return (number / 1e3).toFixed(1) + 'K';
+    if (number >= 1e6 && number < 1e9) return (number / 1e6).toFixed(1) + 'M';
+    if (number >= 1e9 && number < 1e12) return (number / 1e9).toFixed(1) + 'B';
+    return number;
+  }
+  
+
   const backdropUrl = movieDetails.backdrop_path ? `https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}` : 'path_to_default_image.jpg';
+  console.log(movieDetails);
 
   return (
     <section 
@@ -54,25 +71,75 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
         backgroundSize: 'cover', 
         backgroundPosition: 'center' 
       }}>
-        <div className="absolute inset-0 ">
-          <Link href="/">
-            <ArrowUturnLeftIcon className='w-8 h-8 text-white m-8 lg:ml-40' />    
-          </Link>
-        </div>
 
       <div className='flex flex-col lg:flex-row text-white justify-center items-center w-full max-w-screen-xl'>
+        <div className="absolute inset-0 ">
+          <Link href="/">
+            <ArrowUturnLeftIcon className='w-8 h-8 text-white m-8' />    
+          </Link>
+        </div>
+        <div className='flex mx-auto'>
         <div className="m-4 md:m-8 w-1/2">
           <h1>{movieDetails.title}</h1>
+          <span className='font-thin'>{movieDetails.tagline}</span>
+          <div className="space-x-2 pt-8">
+              {movieDetails.genres.map((genre) => (
+                  <span key={genre.id} className="bg-gray-700 px-3 py-1 rounded-full text-white">
+                      {genre.name}
+                  </span>
+              ))}
+          </div>
           <p>{movieDetails.overview}</p>
+
+          {/* Movie Information Card */}
+            <Card className='mt-8'>
+              <CardHeader>
+                <CardTitle>Movie Details</CardTitle>
+              </CardHeader>
+              <CardContent>
+              <div className='flex font-thin items-center space-x-8'>
+                <div className=' justify-center items-center'>
+                  <BanknotesIcon className='w-6 h-6 text-zinc-400' />
+                  ${formatRevenue(movieDetails.revenue)}
+                </div>
+                <div>
+                  <FilmIcon className='w-6 h-6 text-zinc-400' />
+                  {movieDetails.runtime} minutes
+                </div>
+                <div>
+                  <StarIcon className='w-6 h-6 text-zinc-400' />
+                  Rating: {movieDetails.vote_average}
+                </div>
+                <div>
+                  <StarIcon className='w-6 h-6 text-zinc-400' />
+                  Popularity: {movieDetails.popularity}
+                </div>
+              </div>
+              </CardContent>
+              <CardFooter className='text-sm'>
+                {movieDetails.release_date}
+              </CardFooter>
+            </Card>
+
+          {/* Buttons: Add to watched list */}
+          <div className='flex mt-8'>
+            <Button className=''>Watched?</Button>
+          </div>
         </div>
-        <div className='flex justify-center items-center m-4 lg:m-8 w-1/2 p-8'>
+        <div className='flex-col justify-center items-center m-4 lg:m-8 w-1/2 p-8'>
           <Image 
             src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w780${movieDetails.poster_path}` : 'path_to_default_image.jpg'} 
             alt={movieDetails.title} 
             className='rounded-md'
             width={300}
             height={450}
-          /> 
+            />
+          <div className='flex'>
+            <StarIcon className='w-6 h-6 text-zinc-400' />
+            {movieDetails.vote_average}
+
+          </div>
+        </div>
         </div>
       </div>
     </section>
