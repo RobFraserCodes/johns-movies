@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ArrowUturnLeftIcon, StarIcon, FilmIcon, BanknotesIcon } from '@heroicons/react/24/outline';
+import { ArrowUturnLeftIcon, StarIcon, FilmIcon, BanknotesIcon, BookmarkIcon, EyeIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -58,7 +58,6 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
     if (number >= 1e9 && number < 1e12) return (number / 1e9).toFixed(1) + 'B';
     return number;
   }
-  
 
   const backdropUrl = movieDetails.backdrop_path ? `https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}` : 'path_to_default_image.jpg';
   console.log(movieDetails);
@@ -72,12 +71,10 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
         backgroundPosition: 'center' 
       }}>
 
+      {/* Containing Div */}
       <div className='flex flex-col lg:flex-row text-white justify-center items-center w-full max-w-screen-xl'>
-        <div className="absolute inset-0 ">
-          <Link href="/">
-            <ArrowUturnLeftIcon className='w-8 h-8 text-white m-8' />    
-          </Link>
-        </div>
+
+        {/* Movie Details */}
         <div className='flex mx-auto'>
         <div className="m-4 md:m-8 w-1/2">
           <h1>{movieDetails.title}</h1>
@@ -94,25 +91,31 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
           {/* Movie Information Card */}
             <Card className='mt-8'>
               <CardHeader>
-                <CardTitle>Movie Details</CardTitle>
+                <CardTitle>
+                  {/* Cart Title and Buttons */}
+                  <div className='flex justify-between'>
+                    Movie Details
+                    <div className='flex space-x-2'>
+                      <EyeIcon className='w-6 h-6 text-zinc-400 hover:bg-black' />
+                      <StarIcon className='w-6 h-6 text-zinc-400' />
+                      <BookmarkIcon className='w-6 h-6 text-zinc-400' />
+                    </div>
+                  </div>
+                </CardTitle>
               </CardHeader>
               <CardContent>
               <div className='flex font-thin items-center space-x-8'>
-                <div className=' justify-center items-center'>
-                  <BanknotesIcon className='w-6 h-6 text-zinc-400' />
+                <div className='justify-center items-center'>
+                  <BanknotesIcon className='w-8 h-8 text-zinc-400' />
                   ${formatRevenue(movieDetails.revenue)}
                 </div>
                 <div>
-                  <FilmIcon className='w-6 h-6 text-zinc-400' />
+                  <FilmIcon className='w-8 h-8 text-zinc-400' />
                   {movieDetails.runtime} minutes
                 </div>
                 <div>
-                  <StarIcon className='w-6 h-6 text-zinc-400' />
+                  <StarIcon className='w-8 h-8 text-zinc-400' />
                   Rating: {movieDetails.vote_average}
-                </div>
-                <div>
-                  <StarIcon className='w-6 h-6 text-zinc-400' />
-                  Popularity: {movieDetails.popularity}
                 </div>
               </div>
               </CardContent>
@@ -121,25 +124,31 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
               </CardFooter>
             </Card>
 
-          {/* Buttons: Add to watched list */}
-          <div className='flex mt-8'>
-            <Button className=''>Watched?</Button>
-          </div>
         </div>
-        <div className='flex-col justify-center items-center m-4 lg:m-8 w-1/2 p-8'>
+
+        {/* Movie Poster */}
+        <div className='flex-col w-1/2 p-16'>
           <Image 
             src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w780${movieDetails.poster_path}` : 'path_to_default_image.jpg'} 
             alt={movieDetails.title} 
-            className='rounded-md'
-            width={300}
-            height={450}
-            />
-          <div className='flex'>
+            className='rounded-lg'
+            width={780}
+            height={1200}
+          />
+
+          <div className='flex p-4'>
             <StarIcon className='w-6 h-6 text-zinc-400' />
             {movieDetails.vote_average}
-
           </div>
         </div>
+
+        {/* Back Button (it is sitting on top of all the other elements which is not right!) */}
+        {/* <div className="absolute inset-0">
+          <Link href="/">
+            <ArrowUturnLeftIcon className='w-8 h-8 text-white m-8' />    
+          </Link>
+        </div> */}
+
         </div>
       </div>
     </section>
