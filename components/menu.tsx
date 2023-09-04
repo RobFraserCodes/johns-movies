@@ -7,9 +7,9 @@ import { Bars3Icon, PlayCircleIcon } from '@heroicons/react/24/solid'
 
 export default function Menu() {
   return (
-    <header className="container">
+    <header className="">
     <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 uppercase">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-24 items-center justify-between">
         <div className="flex-1 md:flex md:items-center md:gap-12">
             <Link className="block" href="/">
                 <div className='flex'>

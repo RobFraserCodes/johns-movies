@@ -7,7 +7,7 @@ import SearchDB from '@/components/search-database'
 
 export default function Home() {
   return (
-    <main className=''>
+    <main className='space-y-8'>
       <Menu />
       <SearchDB />
       <RecentlyWatched />

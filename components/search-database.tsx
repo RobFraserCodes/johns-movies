@@ -40,7 +40,7 @@ export default function SearchDB() {
   };
 
   return (
-    <div className='mx-auto max-w-screen-xl px-4 sm:px-6 sm:py-12 lg:px-8'>
+    <div className='mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8'>
       <form onSubmit={handleSearch} className="flex align-middle">
         <Input 
           type='search' 
