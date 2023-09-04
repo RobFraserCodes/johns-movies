@@ -157,7 +157,7 @@ export default function UserRegisterPage() {
             </p>
             </div>
 
-            <div className=''>
+            <div className='py-8'>
               <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormProvider {...form}>
