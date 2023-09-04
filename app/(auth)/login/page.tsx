@@ -94,7 +94,9 @@ export default function UserLoginPage() {
   return (
     <section className="bg-white">
     <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+        <div className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+        
+        {/* Place the image of the randomly selected movie */}
         {selectedMovie && (
             <div className="absolute inset-0 h-full w-full">
             <Image
@@ -104,23 +106,26 @@ export default function UserLoginPage() {
                 width={870}
                 height={1110}
                 priority
-                />
+            />
             <div
                 className="absolute inset-0 bg-gradient-to-t from-gray-900 to-gray-900/20"
-                aria-hidden="true"
-                />
+                aria-hidden="true"/>
             </div>
         )}
 
-        <div className="hidden lg:relative lg:block lg:p-12">
-            {/* Logo */}
+        {/* Logo */}
+        <div className="absolute top-8 left-8 text-white">
             <Link className="block" href="/">
-                <div className='flex'>
+                <div className='flex items-center'>
                     <span className="sr-only">Home</span>
                     <PlayCircleIcon className="h-8 w-8 text-gray-100" />
-                    <h1 className='text-xl font-bold text-gray-100 sm:text-3xl uppercase'>{siteDetails.title}</h1>
+                    <h1 className='ml-2 text-xl font-bold text-gray-100 sm:text-3xl uppercase'>{siteDetails.title}</h1>
                 </div>
             </Link>
+            <div className='font-thin'>{siteDetails.description}</div>
+        </div>
+
+        <div className="hidden lg:relative lg:block lg:p-12">
 
             <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
             Login to JMDB 🎥
@@ -132,7 +137,7 @@ export default function UserLoginPage() {
 
             {selectedMovie && <p className='leading-relaxed text-white/90 text-sm font-thin'>Movie image: {selectedMovie.original_title}</p> }
         </div>
-        </section>
+        </div>
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
           <div className="max-w-xl lg:max-w-3xl">
