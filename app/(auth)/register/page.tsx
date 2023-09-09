@@ -304,8 +304,8 @@ export default function UserRegisterPage() {
                     </div>
 
                     {/* Submit Button */}
-                    <div className='mb-4 flex'>
-                        <Button className="mt-4 justify-center items-center mx-auto"
+                    <div className='mb-4'>
+                        <Button className="mt-8 mx-auto"
                             type="submit">Register
                         </Button>
                     </div>
@@ -315,7 +315,7 @@ export default function UserRegisterPage() {
                 </Form>
 
                 {/* Login Link */}
-                <div className="mt-4 text-sm text-center space-x-4">
+                <div className="mt-4 text-sm space-x-4">
                     <span className="text-stone-500">
                         Already have an account?
                     </span>

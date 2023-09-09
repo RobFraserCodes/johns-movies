@@ -41,6 +41,11 @@ export default function Cinema() {
                 />
 
                 <div
+                className="absolute inset-0 bg-gradient-to-t from-gray-900 to-gray-900/10"
+                aria-hidden="true"/>
+            
+
+                <div
                     className="absolute inset-0 flex flex-col items-start justify-end p-6"
                 >
                     <h3 className="text-xl font-medium text-white">{movie.original_title}</h3>

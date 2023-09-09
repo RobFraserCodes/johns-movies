@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ArrowUturnLeftIcon, StarIcon, FilmIcon, BanknotesIcon, BookmarkIcon, EyeIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface movieDetails {
@@ -91,7 +91,7 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
   return (
     
     <section 
-      className="relative flex justify-center items-center py-16" 
+      className="relative flex justify-center items-center py-16 min-h-screen" 
       style={{ 
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${backdropUrl})`,
         backgroundSize: 'cover', 
@@ -99,7 +99,7 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
       }}>
 
       {/* Containing Div */}
-      <div className='flex flex-col lg:flex-row text-white justify-center max-w-screen-xl'>
+      <div className='flex flex-col lg:flex-row text-white justify-center items-center max-w-screen-xl'>
 
         <div className=' mx-auto w-full lg:w-1/2'>
         {/* Back Button */}
@@ -168,7 +168,7 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
         </div>
 
         {/* Movie Poster */}
-        <div className='flex-col w-1/2 p-16 xl:p-32'>
+        <div className='flex-col w-1/2 pt-8 md:p-16 xl:p-32'>
           <Image 
             src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w780${movieDetails.poster_path}` : 'path_to_default_image.jpg'} 
             alt={movieDetails.title} 
