@@ -99,7 +99,7 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
       }}>
 
       {/* Containing Div */}
-      <div className='flex flex-col lg:flex-row text-white justify-center items-center max-w-screen-xl'>
+      <div className='flex flex-col lg:flex-row text-white justify-center max-w-screen-xl'>
 
         <div className=' mx-auto w-full lg:w-1/2'>
         {/* Back Button */}
