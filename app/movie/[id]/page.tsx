@@ -21,6 +21,14 @@ interface movieDetails {
   release_date: string;
 }
 
+interface movieDetailsProps {
+  movieDetails: movieDetails;
+}
+
+interface dateString {
+  dateString: string;
+}
+
 export default function MovieDetailPage({ params }: { params: { id: string } }) {
   const [movieDetails, setMovieDetails] = useState<movieDetails | null>(null);
 
@@ -62,9 +70,28 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
   const backdropUrl = movieDetails.backdrop_path ? `https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}` : 'path_to_default_image.jpg';
   console.log(movieDetails);
 
+  function formatDate(dateString: string) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    const day = date.getDate();
+    let suffix = 'th';
+  
+    if (day === 1 || day === 21 || day === 31) {
+      suffix = 'st';
+    } else if (day === 2 || day === 22) {
+      suffix = 'nd';
+    } else if (day === 3 || day === 23) {
+      suffix = 'rd';
+    }
+  
+    const formattedDate = `${day}${suffix} ${date.toLocaleDateString('en-US', { month: 'long' })} ${date.getFullYear()}`;
+    return formattedDate;
+  }
+
   return (
+    
     <section 
-      className="relative flex justify-center items-center h-screen py-16" 
+      className="relative flex justify-center items-center py-16" 
       style={{ 
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${backdropUrl})`,
         backgroundSize: 'cover', 
@@ -72,11 +99,18 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
       }}>
 
       {/* Containing Div */}
-      <div className='flex flex-col lg:flex-row text-white justify-center items-center w-full max-w-screen-xl'>
+      <div className='flex flex-col lg:flex-row text-white justify-center items-center max-w-screen-xl'>
 
+        <div className=' mx-auto w-full lg:w-1/2'>
+        {/* Back Button */}
+        <div className="m-8">
+          <Link href="/" className={buttonVariants({ variant: "ghost" })}>
+            <ArrowUturnLeftIcon className='w-8 h-8 text-white' />    
+          </Link>
+        </div>
+        
         {/* Movie Details */}
-        <div className='flex mx-auto'>
-        <div className="m-4 md:m-8 w-1/2">
+        <div className="m-4 md:m-8">
           <h1>{movieDetails.title}</h1>
           <span className='font-thin'>{movieDetails.tagline}</span>
           <div className="space-x-2 pt-8">
@@ -95,11 +129,14 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
                   {/* Cart Title and Buttons */}
                   <div className='flex justify-between'>
                     Movie Details
-                    <div className='flex space-x-2'>
+                    {/* 
+                      Functions for logged in users
+                      <div className='flex space-x-2'>
                       <EyeIcon className='w-6 h-6 text-zinc-400 hover:bg-black' />
                       <StarIcon className='w-6 h-6 text-zinc-400' />
                       <BookmarkIcon className='w-6 h-6 text-zinc-400' />
-                    </div>
+                    </div> 
+                    */}
                   </div>
                 </CardTitle>
               </CardHeader>
@@ -120,14 +157,18 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
               </div>
               </CardContent>
               <CardFooter className='text-sm'>
-                {movieDetails.release_date}
+                Released on: {formatDate(movieDetails.release_date)}
               </CardFooter>
+
             </Card>
 
         </div>
 
+
+        </div>
+
         {/* Movie Poster */}
-        <div className='flex-col w-1/2 p-16'>
+        <div className='flex-col w-1/2 p-16 xl:p-32'>
           <Image 
             src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w780${movieDetails.poster_path}` : 'path_to_default_image.jpg'} 
             alt={movieDetails.title} 
@@ -142,14 +183,6 @@ export default function MovieDetailPage({ params }: { params: { id: string } }) 
           </div>
         </div>
 
-        {/* Back Button (it is sitting on top of all the other elements which is not right!) */}
-        {/* <div className="absolute inset-0">
-          <Link href="/">
-            <ArrowUturnLeftIcon className='w-8 h-8 text-white m-8' />    
-          </Link>
-        </div> */}
-
-        </div>
       </div>
     </section>
   );  

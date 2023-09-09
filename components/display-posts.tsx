@@ -1,5 +1,3 @@
-import prisma from '../lib/prisma';
-
 export const getStaticProps: GetStaticProps = async () => {
     const feed = await prisma.post.findMany({
       where: { published: true },
@@ -13,4 +11,4 @@ export const getStaticProps: GetStaticProps = async () => {
       props: { feed },
       revalidate: 10,
     };
-  };
+};
