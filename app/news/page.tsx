@@ -7,7 +7,7 @@ interface PostItemProps {
     post: Pick<Post, 'id' | 'title' | 'content'>;
 }
 
-export default function NewsPage() {
+export default function NewsPage({post}: PostItemProps) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
