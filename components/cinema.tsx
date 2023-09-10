@@ -51,7 +51,7 @@ export default function Cinema() {
                     <h3 className="text-xl font-medium text-white">{movie.original_title}</h3>
 
                     <span
-                    className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                    className="mt-2 inline-block bg-blue-500 rounded-full px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
                     >
                     Now Showing
                     </span>
