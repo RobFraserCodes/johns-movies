@@ -38,12 +38,12 @@ export default function Cinema() {
   return (
     <section>
         <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
-            <h2>Upcoming Movies</h2>
+            <h2>Latest Movies</h2>
             {/* Movie previews */}
             <ul className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3">
             {Array.isArray(randomThreeMovies) && randomThreeMovies.map((movie, index) => (
                 <li key={index} className={index === 2 ? "lg:col-span-2 lg:col-start-2 lg:row-span-2 lg:row-start-1" : ""}>
-                <Link href="#" className="relative block group">
+                <Link href={`/movie/${movie.id}`} className="relative block group">
                     <Image
                     src={`https://image.tmdb.org/t/p/w780/${movie.backdrop_path}`}
                     alt={movie.original_title}
