@@ -7,6 +7,7 @@ import Link from 'next/link'
 interface nowPlaying {
     original_title: string;
     backdrop_path: string;
+    id: number;
 }
 
 // Function to shuffle an array
@@ -60,9 +61,9 @@ export default function Cinema() {
                     <h3 className="text-xl font-medium text-white">
                         {movie.original_title}
                     </h3>
-                    <span className="mt-2 inline-block bg-blue-500 rounded-full px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+                    {/* <span className="mt-2 inline-block bg-blue-500 rounded-full px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
                         Now Showing
-                    </span>
+                    </span> */}
                     </div>
                 </Link>
                 </li>
