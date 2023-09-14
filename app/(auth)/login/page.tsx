@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useEffect, useState, useRef, use } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { siteDetails } from '@/lib/meta';
-import { PlayCircleIcon } from '@heroicons/react/24/solid';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+import React, { useEffect, useState, useRef } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { siteDetails } from '@/lib/meta'
+import { PlayCircleIcon } from '@heroicons/react/24/solid'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 import {
   Form,
   FormControl,
@@ -15,10 +15,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { useForm, FormProvider } from 'react-hook-form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from '@/components/ui/form'
+import { useForm, FormProvider } from 'react-hook-form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 interface Movie {
   id: number;
